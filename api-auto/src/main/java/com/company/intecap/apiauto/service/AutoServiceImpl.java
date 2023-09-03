@@ -98,4 +98,73 @@ public class AutoServiceImpl implements IAutoService{
 
         return new ResponseEntity<AutoResponseRest>(response, HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<AutoResponseRest> actualizar(Auto auto, Long id) {
+        log.info("Inicia método actualizar() Auto");
+
+        AutoResponseRest response = new AutoResponseRest();
+        List<Auto> list = new ArrayList<>();
+
+        try{
+            Optional<Auto> autoBuscado = autoDao.findById(id);
+
+            if (autoBuscado.isPresent()){
+                //Seteamos los datos que vienen en el objeto
+                autoBuscado.get().setAsientos(auto.getAsientos());
+                autoBuscado.get().setLinea(auto.getLinea());
+                autoBuscado.get().setMarca(auto.getMarca());
+                autoBuscado.get().setModelo(auto.getModelo());
+                autoBuscado.get().setTransmision(auto.getTransmision());
+
+                Auto autoActualizado = autoDao.save(autoBuscado.get());
+
+                if (autoActualizado != null){
+                    list.add(autoActualizado);
+                    response.getAutoResponse().setAutos(list);
+                }else{
+                    log.error("Error al actualizar auto {} ", auto.toString());
+                    response.setMetadata("Respuesta no ok", "400", "Auto no actualizado");
+                    return new ResponseEntity<AutoResponseRest>(response, HttpStatus.BAD_REQUEST);
+                }
+            }else{
+                log.error("Error al actualizar auto{} ", auto.toString());
+                response.setMetadata("Respuesta no ok", "400", "Auto no actualizado");
+                return new ResponseEntity<AutoResponseRest>(response, HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e){
+            log.error("Error al actualizar auto {} ", e.getMessage());
+            response.setMetadata("Respuesta no ok ", "500", "Error al actualizar Auto");
+            return new ResponseEntity<AutoResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.setMetadata("Respuesta ok ", "200", "Auto Actualizado");
+        return new ResponseEntity<AutoResponseRest>(response, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<AutoResponseRest> eliminar(Long id) {
+        log.info("Inicio de metodo eliminar () auto");
+        AutoResponseRest response = new AutoResponseRest();
+
+        try{
+            Optional<Auto> auto = autoDao.findById(id);
+
+            if (auto.isPresent()){
+                autoDao.delete(auto.get());
+            }else{
+                log.error("Error al eliminar auto {}", id);
+                response.setMetadata("Respuesta no ok", "400", "Auto no eliminado");
+                return new ResponseEntity<AutoResponseRest>(response, HttpStatus.NOT_FOUND);
+            }
+        }catch (Exception e){
+            log.error("Error al eliminar auto {} ", e.getMessage());
+            response.setMetadata("Respuesta no ok", "500", "Error al eliminar auto");
+            return new ResponseEntity<AutoResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        response.setMetadata("Respuesta ok ", "200", "Auto Eliminado");
+        return new ResponseEntity<AutoResponseRest>(response, HttpStatus.OK);
+    }
+
 }

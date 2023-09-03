@@ -28,4 +28,10 @@ public class AutoRestController {
     public ResponseEntity<AutoResponseRest> crearAuto(@RequestBody Auto request){
         return service.crearAuto(request);
     }
+
+    @PutMapping("/autos/{id}")//http://localhost:8080/api/v1/autos/1
+    public ResponseEntity<AutoResponseRest> actualizar(@RequestBody Auto request, @PathVariable Long id){ return service.actualizar(request, id);}
+
+    @DeleteMapping("/autos/{id}")//http://localhost:8080/api/v1/autos/1
+    public ResponseEntity<AutoResponseRest> eliminar(@PathVariable Long id){ return service.eliminar(id); }
 }

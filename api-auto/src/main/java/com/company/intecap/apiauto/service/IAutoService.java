@@ -11,4 +11,8 @@ public interface IAutoService {
     public ResponseEntity<AutoResponseRest> buscarPorId(Long id);
 
     public ResponseEntity<AutoResponseRest> crearAuto(Auto auto);
+
+    public ResponseEntity<AutoResponseRest> actualizar(Auto auto, Long id);
+
+    public ResponseEntity<AutoResponseRest> eliminar(Long id);
 }
