@@ -24,8 +24,18 @@ public class CategoriaRestController {
         return service.buscarPorId(id);
     }
 
-    @PostMapping("/categorias")
+    @PostMapping("/categorias")//http://localhost:8080/api/v1/categorias
     public ResponseEntity<CategoriaResponseRest> crear(@RequestBody Categoria request){
         return service.crear(request);
+    }
+
+    @PutMapping("/categorias/{id}") //http://localhost:8080/api/v1/categorias/1
+    public ResponseEntity<CategoriaResponseRest> actualizar(@RequestBody Categoria request, @PathVariable Long id){
+        return service.actualizar(request, id);
+    }
+
+    @DeleteMapping("/categorias/{id}")
+    public ResponseEntity<CategoriaResponseRest> eliminar(@PathVariable Long id){
+        return service.eliminar(id);
     }
 }
