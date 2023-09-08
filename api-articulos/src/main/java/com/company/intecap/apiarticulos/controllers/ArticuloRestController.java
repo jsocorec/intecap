@@ -26,13 +26,13 @@ public class ArticuloRestController {
     }
 
     @PostMapping("/articulos") //http://localhost:8080/api/v1/articulos
-    public ResponseEntity<ArticuloResponseRest> crearArticulo(@RequestBody Articulo request){
-        return service.crearArticulo(request);
+    public ResponseEntity<ArticuloResponseRest> crearArticulo(@RequestBody Articulo articulo){
+        return service.crearArticulo(articulo);
     }
 
     @PutMapping("/articulos/{id}") //http://localhost:8080/api/v1/articulos/1
-    public ResponseEntity<ArticuloResponseRest> actualizarArticulo(@RequestBody Articulo request, @PathVariable Long id){
-        return service.actualizarArticulo(request, id);
+    public ResponseEntity<ArticuloResponseRest> actualizarArticulo(@RequestBody Articulo articulo, @PathVariable Long id){
+        return service.actualizarArticulo(articulo, id);
     }
 
     @DeleteMapping("/articulos")//http://localhost:8080/api/v1/articulos/1

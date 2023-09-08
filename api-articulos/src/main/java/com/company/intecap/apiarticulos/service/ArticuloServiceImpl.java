@@ -117,6 +117,7 @@ public class ArticuloServiceImpl implements IArticuloService{
             if (articuloBuscado.isPresent()){
                 articuloBuscado.get().setName(articulo.getName());
                 articuloBuscado.get().setPrecio(articulo.getPrecio());
+                articuloBuscado.get().setFabricante(articulo.getFabricante());
 
                 Articulo articuloActualizado = articuloDao.save(articuloBuscado.get());
 
